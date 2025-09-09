@@ -1,6 +1,6 @@
-# 🏕️ CRUD de Campers - CampusLands
+#  Express - CampusLands
 ---
-## 📋 Descripción del Proyecto
+## 📋 Descripción del Ejercicio
 
 ---
 
@@ -29,9 +29,9 @@ http://localhost:3000
 
 ---
 
-## 📊 Endpoints Disponibles
+## Endpoints Disponibles
 
-### 1. 🏠 **Ruta de Bienvenida**
+### 1. **Ruta de Bienvenida**
 
 **Funcionalidad:** Proporciona información general del API, versión y endpoints disponibles.
 
@@ -63,7 +63,7 @@ GET /
 
 ---
 
-### 2. 📋 **Obtener Todos los Campers**
+### 2. **Obtener Todos los Campers**
 
 **Funcionalidad:** Recupera la lista completa de campers registrados, ordenados por fecha de creación (más recientes primero).
 
