@@ -119,16 +119,16 @@ app.get('/campers/:id', async (req, res) => {
 // ===== CREAR CAMPER =====
 app.post('/campers', async (req, res) => {
     try {
-        const { nombre, apellido, edad, email, carrera } = req.body;
+        const { nombre, apellido, edad, email, ruta } = req.body;
         console.log('➕ Creando nuevo camper...');
         console.log(`📝 Datos: ${nombre} ${apellido}, ${email}`);
 
         // Validaciones básicas
-        if (!nombre || !apellido || !email || !carrera) {
+        if (!nombre || !apellido || !email || !ruta) {
             console.log('❌ Faltan campos obligatorios');
             return res.status(400).json({ 
                 success: false,
-                error: 'Los campos nombre, apellido, email y carrera son obligatorios' 
+                error: 'Los campos nombre, apellido, email y ruta son obligatorios' 
             });
         }
 
@@ -137,7 +137,7 @@ app.post('/campers', async (req, res) => {
             apellido: apellido.trim(),
             edad: parseInt(edad) || 0,
             email: email.trim().toLowerCase(),
-            carrera: carrera.trim(),
+            ruta: ruta.trim(),
             fechaCreacion: new Date()
         };
 
@@ -166,7 +166,7 @@ app.post('/campers', async (req, res) => {
 app.put('/campers/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { nombre, apellido, edad, email, carrera } = req.body;
+        const { nombre, apellido, edad, email, ruta } = req.body;
         
         console.log(`📝 Actualizando camper con ID: ${id}`);
 
@@ -179,11 +179,11 @@ app.put('/campers/:id', async (req, res) => {
         }
 
         // Validaciones básicas
-        if (!nombre || !apellido || !email || !carrera) {
+        if (!nombre || !apellido || !email || !ruta) {
             console.log('❌ Faltan campos obligatorios');
             return res.status(400).json({ 
                 success: false,
-                error: 'Los campos nombre, apellido, email y carrera son obligatorios' 
+                error: 'Los campos nombre, apellido, email y ruta son obligatorios' 
             });
         }
 
@@ -192,7 +192,7 @@ app.put('/campers/:id', async (req, res) => {
             apellido: apellido.trim(),
             edad: parseInt(edad) || 0,
             email: email.trim().toLowerCase(),
-            carrera: carrera.trim(),
+            ruta: ruta.trim(),
             fechaActualizacion: new Date()
         };
 
@@ -293,25 +293,25 @@ app.get('/stats', async (req, res) => {
         const campers = await collection.find({}).toArray();
         
         // Calcular estadísticas
-        const carreras = [...new Set(campers.map(c => c.carrera))];
+        const rutas = [...new Set(campers.map(c => c.ruta))];
         const edades = campers.map(c => c.edad).filter(e => e > 0);
         const promedioEdad = edades.length > 0 ? 
             Math.round(edades.reduce((a, b) => a + b, 0) / edades.length) : 0;
 
         const stats = {
             totalCampers,
-            totalCarreras: carreras.length,
+            totalrutas: rutas.length,
             promedioEdad,
-            carreras: carreras,
-            campersPorCarrera: {}
+            rutas: rutas,
+            campersPorruta: {}
         };
 
-        // Contar campers por carrera
-        carreras.forEach(carrera => {
-            stats.campersPorCarrera[carrera] = campers.filter(c => c.carrera === carrera).length;
+        // Contar campers por ruta
+        rutas.forEach(ruta => {
+            stats.campersPorruta[ruta] = campers.filter(c => c.ruta === ruta).length;
         });
 
-        console.log(`✅ Estadísticas calculadas: ${totalCampers} campers, ${carreras.length} carreras`);
+        console.log(`✅ Estadísticas calculadas: ${totalCampers} campers, ${rutas.length} rutas`);
         
         res.json({
             success: true,
@@ -394,7 +394,7 @@ async function iniciarServidor() {
         console.log('\n💡 Ejemplos de uso:');
         console.log('curl http://localhost:3000/');
         console.log('curl http://localhost:3000/campers');
-        console.log('curl -X POST http://localhost:3000/campers -H "Content-Type: application/json" -d \'{"nombre":"Juan","apellido":"Pérez","edad":20,"email":"juan@email.com","carrera":"Desarrollo Web"}\'');
+        console.log('curl -X POST http://localhost:3000/campers -H "Content-Type: application/json" -d \'{"nombre":"Juan","apellido":"Pérez","edad":20,"email":"juan@email.com","ruta":"Desarrollo Web"}\'');
         console.log('\n✅ Servidor listo para recibir peticiones');
     });
 }
