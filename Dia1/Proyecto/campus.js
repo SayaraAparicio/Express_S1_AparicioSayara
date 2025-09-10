@@ -28,7 +28,7 @@ async function conectarDB() {
 
         console.log('✅ Conexión exitosa a MongoDB');
         console.log(`📊 Base de datos: ${dbName}`);
-        console.log(`📦 Colección: ${collectionName}`);
+        console.log(`Colección: ${collectionName}`);
         return true;
     } catch (error) {
         console.error('❌ Error conectando a MongoDB:', error.message);
