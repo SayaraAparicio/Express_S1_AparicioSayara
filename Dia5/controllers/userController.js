@@ -1,23 +1,11 @@
-import mongoose from "mongoose";
-
-const UserSchema = new mongoose.Schema({
-    name:{type:String,required:true,trim:true},
-    email:{type:String,required:true,unique:true,lowercase:true,trim:true},
-    age:{type:Number,min:0}
-},{timestamps:true});
-
-/*
--- Clase de dominio --
-*/
-
-
-class UserClass{
-    get isAdult(){
-        return (this.age ?? 0) >=18;
+export class UserController{
+    constructor(userService){
+        this.service=userService;
     }
-    static async findByEmail(email){
-        return this.findOne({email});
-    }
+    // OJOOOOO - Ya estamos manejando aqui el body/parametros/etc.. del request
+    create = async (req,res)=>{};
+    list = async (req,res)=>{};
+    get = async (req,res)=>{};//Obtener por ID desde el EndPoint
+    update = async (req,res)=>{};
+    delete = async (req,res)=>{};
 }
-UserSchema.loadClass(UserClass);
-export const UserModel = mongoose.model("User",UserSchema);
