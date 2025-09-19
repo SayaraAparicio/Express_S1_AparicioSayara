@@ -1,0 +1,261 @@
+openapi: 3.0.0
+info:
+  title: API Campers
+  version: 1.0.0
+  description: API para gestionar campers con Node.js, Express y MongoDB
+servers:
+  - url: http://localhost:3000
+
+tags:
+  - name: Campers
+    description: Endpoints para gestionar campers
+
+paths:
+  /campers:
+    get:
+      summary: Obtener todos los campers
+      tags: [Campers]
+      responses:
+        '200':
+          description: Lista de campers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Camper'
+        '500':
+          description: Error al obtener los campers
+
+
+
+
+
+
+    post:
+      summary: Crear un nuevo camper
+      tags: [Campers]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CamperInput'
+      responses:
+        '201':
+          description: Camper creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Camper'
+        '400':
+          description: Datos inválidos
+        '500':
+          description: Error al crear camper
+
+  /campers/{id}:
+
+    get:
+      summary: Buscar un Camper por Id
+      tags: [Campers]
+      parameters: 
+       - in: path
+         name: id
+         schema:
+          type: string
+          required: true
+         description: Id del camper en MongoDB
+      responses:
+        '200':
+          description: Camper Encontrado correctamente
+        '404':
+          description: Camper no encontrado
+        '500':
+          description: Error al eliminar camper
+
+
+
+
+    delete:
+      summary: Eliminar un camper por ID
+      tags: [Campers]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID del camper en MongoDB
+      responses:
+        '200':
+          description: Camper eliminado correctamente
+        '404':
+          description: Camper no encontrado
+        '500':
+          description: Error al eliminar camper
+
+    put:
+      summary: Actualizar un camper por ID
+      tags: [Campers]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID del camper en MongoDB
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CamperInput'
+      responses:
+        '200':
+          description: Camper actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Camper'
+        '400':
+          description: Datos inválidos
+        '404':
+          description: Camper no encontrado
+        '500':
+          description: Error al actualizar camper
+
+components:
+  schemas:
+    Camper:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 64f123abcde4567890ffedc1
+        cedula:
+          type: string
+          example: "1012345678"
+        nombre:
+          type: string
+          example: "Juan"
+        apellido:
+          type: string
+          example: "Pérez"
+        direccion:
+          type: string
+          example: "Calle 123, Barrio Centro"
+        acudiente:
+          type: string
+          example: "Ana Pérez"
+        telefono:
+          type: string
+          example: "3001234567"
+        telefonoFijo:
+          type: string
+          example: "1234567"
+        estado:
+          type: object
+          properties:
+            ingreso:
+              type: boolean
+              example: true
+            cursando:
+              type: boolean
+              example: false
+            aprobado:
+              type: boolean
+              example: false
+            certificado:
+              type: boolean
+              example: false
+            expulsado:
+              type: boolean
+              example: false
+        notas:
+          type: object
+          properties:
+            fundamentos:
+              type: number
+              example: 4.5
+            web:
+              type: number
+              example: 3.8
+            bd:
+              type: number
+              example: 4.0
+            backend:
+              type: number
+              example: 4.2
+        riesgo:
+          type: string
+          example: "Bajo"
+        grupo:
+          type: string
+          example: "Grupo A"
+
+    CamperInput:
+      type: object
+      required:
+        - cedula
+        - nombre
+      properties:
+        cedula:
+          type: string
+          example: "1012345678"
+        nombre:
+          type: string
+          example: "Juan"
+        apellido:
+          type: string
+          example: "Pérez"
+        direccion:
+          type: string
+          example: "Calle 123, Barrio Centro"
+        acudiente:
+          type: string
+          example: "Ana Pérez"
+        telefono:
+          type: string
+          example: "3001234567"
+        telefonoFijo:
+          type: string
+          example: "1234567"
+        estado:
+          type: object
+          properties:
+            ingreso:
+              type: boolean
+              example: true
+            cursando:
+              type: boolean
+              example: false
+            aprobado:
+              type: boolean
+              example: false
+            certificado:
+              type: boolean
+              example: false
+            expulsado:
+              type: boolean
+              example: false
+        notas:
+          type: object
+          properties:
+            fundamentos:
+              type: number
+              example: 4.5
+            web:
+              type: number
+              example: 3.8
+            bd:
+              type: number
+              example: 4.0
+            backend:
+              type: number
+              example: 4.2
+        riesgo:
+          type: string
+          example: "Bajo"
+        grupo:
+          type: string
+          example: "Grupo A"
